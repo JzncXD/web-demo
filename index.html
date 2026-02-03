@@ -1,10 +1,113 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My First Website </title>
+    <title>Simple Calculator</title>
   </head>
-  <body>
-    <h1>Hello, Web!</h1>
-    <p>This site is live.</p>
+  <body bgcolor="#2c3e50" text="#ffffff">
+    
+    <center>
+      <h1><font color="#3498db" size="7">🧮 SIMPLE CALCULATOR</font></h1>
+      <hr width="50%" color="#3498db">
+      
+      <br>
+      
+      <h2><font color="#ecf0f1">Display:</font></h2>
+      <div style="background:#34495e;padding:20px;border-radius:15px;width:400px;margin:auto;">
+        <h1><font color="#2ecc71" size="8" id="display">0</font></h1>
+      </div>
+      
+      <br><br>
+      
+      <h3><font color="#ecf0f1">Number Buttons</font></h3>
+      <table cellpadding="8">
+        <tr>
+          <td><button onclick="addNumber(7)" style="width:90px;height:90px;font-size:36px;background:#e74c3c;color:white;border:none;border-radius:10px;cursor:pointer;">7</button></td>
+          <td><button onclick="addNumber(8)" style="width:90px;height:90px;font-size:36px;background:#e74c3c;color:white;border:none;border-radius:10px;cursor:pointer;">8</button></td>
+          <td><button onclick="addNumber(9)" style="width:90px;height:90px;font-size:36px;background:#e74c3c;color:white;border:none;border-radius:10px;cursor:pointer;">9</button></td>
+        </tr>
+        <tr>
+          <td><button onclick="addNumber(4)" style="width:90px;height:90px;font-size:36px;background:#e67e22;color:white;border:none;border-radius:10px;cursor:pointer;">4</button></td>
+          <td><button onclick="addNumber(5)" style="width:90px;height:90px;font-size:36px;background:#e67e22;color:white;border:none;border-radius:10px;cursor:pointer;">5</button></td>
+          <td><button onclick="addNumber(6)" style="width:90px;height:90px;font-size:36px;background:#e67e22;color:white;border:none;border-radius:10px;cursor:pointer;">6</button></td>
+        </tr>
+        <tr>
+          <td><button onclick="addNumber(1)" style="width:90px;height:90px;font-size:36px;background:#f39c12;color:white;border:none;border-radius:10px;cursor:pointer;">1</button></td>
+          <td><button onclick="addNumber(2)" style="width:90px;height:90px;font-size:36px;background:#f39c12;color:white;border:none;border-radius:10px;cursor:pointer;">2</button></td>
+          <td><button onclick="addNumber(3)" style="width:90px;height:90px;font-size:36px;background:#f39c12;color:white;border:none;border-radius:10px;cursor:pointer;">3</button></td>
+        </tr>
+        <tr>
+          <td colspan="3"><button onclick="addNumber(0)" style="width:100%;height:90px;font-size:36px;background:#16a085;color:white;border:none;border-radius:10px;cursor:pointer;">0</button></td>
+        </tr>
+      </table>
+      
+      <br>
+      
+      <h3><font color="#ecf0f1">Operations</font></h3>
+      <button onclick="setOperation('+')" style="width:150px;height:80px;font-size:48px;background:#27ae60;color:white;border:none;border-radius:10px;cursor:pointer;margin:5px;">+</button>
+      <button onclick="setOperation('-')" style="width:150px;height:80px;font-size:48px;background:#c0392b;color:white;border:none;border-radius:10px;cursor:pointer;margin:5px;">-</button>
+      
+      <br><br>
+      
+      <button onclick="calculate()" style="width:320px;height:80px;font-size:32px;background:#3498db;color:white;border:none;border-radius:10px;cursor:pointer;font-weight:bold;">= EQUALS</button>
+      
+      <br><br>
+      
+      <button onclick="clear()" style="width:320px;height:60px;font-size:24px;background:#95a5a6;color:white;border:none;border-radius:10px;cursor:pointer;">CLEAR</button>
+      
+    </center>
+    
+    <script>
+      let display = '0';
+      let firstNumber = 0;
+      let operation = null;
+      let newNumber = true;
+      
+      function addNumber(num) {
+        if (newNumber) {
+          display = num.toString();
+          newNumber = false;
+        } else {
+          display = display + num.toString();
+        }
+        updateDisplay();
+      }
+      
+      function setOperation(op) {
+        firstNumber = parseFloat(display);
+        operation = op;
+        newNumber = true;
+      }
+      
+      function calculate() {
+        if (operation === null) return;
+        
+        let secondNumber = parseFloat(display);
+        let result = 0;
+        
+        if (operation === '+') {
+          result = firstNumber + secondNumber;
+        } else if (operation === '-') {
+          result = firstNumber - secondNumber;
+        }
+        
+        display = result.toString();
+        updateDisplay();
+        operation = null;
+        newNumber = true;
+      }
+      
+      function clear() {
+        display = '0';
+        firstNumber = 0;
+        operation = null;
+        newNumber = true;
+        updateDisplay();
+      }
+      
+      function updateDisplay() {
+        document.getElementById('display').innerText = display;
+      }
+    </script>
+    
   </body>
 </html>
