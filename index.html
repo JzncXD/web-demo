@@ -1,111 +1,216 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Calculator</title>
+    <title>AI Chat Assistant</title>
   </head>
-  <body bgcolor="#2c3e50" text="#ffffff">
+  <body bgcolor="#343541" text="#ffffff" style="margin:0;font-family:Arial,sans-serif;">
     
-    <center>
-      <h1><font color="#3498db" size="7">ACE DELOS REYES CALCULATOR SHOP</font></h1>
-      <hr width="50%" color="#3498db">
+    <!-- Header -->
+    <div style="background:#202123;padding:15px;border-bottom:1px solid #444654;position:fixed;top:0;left:0;right:0;z-index:100;">
+      <center>
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="33%">
+              <button onclick="newChat()" style="background:#10a37f;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:14px;">+ New Chat</button>
+            </td>
+            <td width="34%" align="center">
+              <h2 style="margin:0;"><font color="#10a37f" size="5">🤖 AI Chat Assistant</font></h2>
+            </td>
+            <td width="33%" align="right">
+              <font color="#8e8ea0" size="3">Model: GPT-4</font>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    
+    <!-- Chat Area -->
+    <div id="chatContainer" style="margin-top:80px;margin-bottom:150px;padding:20px;max-width:900px;margin-left:auto;margin-right:auto;">
       
-      <br>
-      
-      <h2><font color="#ecf0f1">Display:</font></h2>
-      <div style="background:#34495e;padding:20px;border-radius:15px;width:400px;margin:auto;">
-        <h1><font color="#2ecc71" size="8" id="display">0</font></h1>
+      <!-- Welcome Message -->
+      <div style="text-align:center;margin-top:100px;" id="welcomeMsg">
+        <h1><font color="#ffffff" size="7">👋 Hello!</font></h1>
+        <p><font color="#8e8ea0" size="4">How can I help you today?</font></p>
+        
+        <br><br>
+        
+        <table width="100%" cellpadding="10">
+          <tr>
+            <td width="50%">
+              <div onclick="sendExample('Explain quantum computing in simple terms')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
+                <p><font color="#ffffff" size="3">💡 Explain quantum computing</font></p>
+                <p><font color="#8e8ea0" size="2">in simple terms</font></p>
+              </div>
+            </td>
+            <td width="50%">
+              <div onclick="sendExample('Write a creative story about a robot')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
+                <p><font color="#ffffff" size="3">✍️ Write a creative story</font></p>
+                <p><font color="#8e8ea0" size="2">about a robot</font></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="50%">
+              <div onclick="sendExample('Help me plan a trip to Japan')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
+                <p><font color="#ffffff" size="3">✈️ Help me plan a trip</font></p>
+                <p><font color="#8e8ea0" size="2">to Japan</font></p>
+              </div>
+            </td>
+            <td width="50%">
+              <div onclick="sendExample('Teach me basic Python programming')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
+                <p><font color="#ffffff" size="3">💻 Teach me programming</font></p>
+                <p><font color="#8e8ea0" size="2">Python basics</font></p>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
       
-      <br><br>
+      <!-- Messages will appear here -->
+      <div id="messages"></div>
       
-      <h3><font color="#ecf0f1">Number Buttons</font></h3>
-      <table cellpadding="8">
-        <tr>
-          <td><button onclick="addNumber(7)" style="width:90px;height:90px;font-size:36px;background:#e74c3c;color:white;border:none;border-radius:10px;cursor:pointer;">7</button></td>
-          <td><button onclick="addNumber(8)" style="width:90px;height:90px;font-size:36px;background:#e74c3c;color:white;border:none;border-radius:10px;cursor:pointer;">8</button></td>
-          <td><button onclick="addNumber(9)" style="width:90px;height:90px;font-size:36px;background:#e74c3c;color:white;border:none;border-radius:10px;cursor:pointer;">9</button></td>
-        </tr>
-        <tr>
-          <td><button onclick="addNumber(4)" style="width:90px;height:90px;font-size:36px;background:#e67e22;color:white;border:none;border-radius:10px;cursor:pointer;">4</button></td>
-          <td><button onclick="addNumber(5)" style="width:90px;height:90px;font-size:36px;background:#e67e22;color:white;border:none;border-radius:10px;cursor:pointer;">5</button></td>
-          <td><button onclick="addNumber(6)" style="width:90px;height:90px;font-size:36px;background:#e67e22;color:white;border:none;border-radius:10px;cursor:pointer;">6</button></td>
-        </tr>
-        <tr>
-          <td><button onclick="addNumber(1)" style="width:90px;height:90px;font-size:36px;background:#f39c12;color:white;border:none;border-radius:10px;cursor:pointer;">1</button></td>
-          <td><button onclick="addNumber(2)" style="width:90px;height:90px;font-size:36px;background:#f39c12;color:white;border:none;border-radius:10px;cursor:pointer;">2</button></td>
-          <td><button onclick="addNumber(3)" style="width:90px;height:90px;font-size:36px;background:#f39c12;color:white;border:none;border-radius:10px;cursor:pointer;">3</button></td>
-        </tr>
-        <tr>
-          <td colspan="3"><button onclick="addNumber(0)" style="width:100%;height:90px;font-size:36px;background:#16a085;color:white;border:none;border-radius:10px;cursor:pointer;">0</button></td>
-        </tr>
-      </table>
-      
-      <br>
-      
-      <h3><font color="#ecf0f1">Operations</font></h3>
-      <button onclick="setOperation('+')" style="width:150px;height:80px;font-size:48px;background:#27ae60;color:white;border:none;border-radius:10px;cursor:pointer;margin:5px;">+</button>
-      <button onclick="setOperation('-')" style="width:150px;height:80px;font-size:48px;background:#c0392b;color:white;border:none;border-radius:10px;cursor:pointer;margin:5px;">-</button>
-      
-      <br><br>
-      
-      <button onclick="calculate()" style="width:320px;height:80px;font-size:32px;background:#3498db;color:white;border:none;border-radius:10px;cursor:pointer;font-weight:bold;"> = </button>
-      
-      <br><br>
-      
-      <button onclick="clear()" style="width:320px;height:60px;font-size:24px;background:#95a5a6;color:white;border:none;border-radius:10px;cursor:pointer;">CLEAR</button>
-      
-    </center>
+    </div>
+    
+    <!-- Input Area (Fixed Bottom) -->
+    <div style="position:fixed;bottom:0;left:0;right:0;background:#343541;padding:20px;border-top:1px solid #444654;">
+      <center>
+        <div style="max-width:900px;background:#40414f;border-radius:10px;padding:15px;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="90%">
+                <input type="text" id="userInput" placeholder="Send a message..." style="width:95%;background:transparent;border:none;color:#ffffff;font-size:16px;outline:none;" onkeypress="if(event.key==='Enter') sendMessage()">
+              </td>
+              <td width="10%" align="right">
+                <button onclick="sendMessage()" style="background:#10a37f;color:white;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;font-size:18px;">➤</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <p><font color="#8e8ea0" size="2">AI can make mistakes. Check important info.</font></p>
+      </center>
+    </div>
     
     <script>
-      let display = '0';
-      let firstNumber = 0;
-      let operation = null;
-      let newNumber = true;
+      const responses = {
+        "hello": "Hello! How can I assist you today?",
+        "hi": "Hi there! What can I help you with?",
+        "how are you": "I'm doing great, thank you for asking! How can I help you today?",
+        "what is your name": "I'm an AI Chat Assistant, here to help answer your questions!",
+        "explain quantum computing in simple terms": "Quantum computing uses the principles of quantum mechanics to process information. Unlike regular computers that use bits (0 or 1), quantum computers use 'qubits' that can be both 0 and 1 at the same time. This allows them to solve certain complex problems much faster than traditional computers!",
+        "write a creative story about a robot": "Once upon a time, there was a robot named Pixel who dreamed of painting. Unlike other robots who were designed for calculations and tasks, Pixel wanted to create art. One day, Pixel discovered that by combining logic with creativity, it could paint the most beautiful digital masterpieces the world had ever seen. 🎨",
+        "help me plan a trip to japan": "Great choice! For Japan, I'd recommend:\n\n• Tokyo - Modern city, amazing food, technology\n• Kyoto - Traditional temples, beautiful gardens\n• Osaka - Food paradise, vibrant nightlife\n• Mount Fuji - Iconic views and hiking\n\nBest time to visit: Spring (cherry blossoms) or Fall (autumn colors). Don't forget to try sushi, ramen, and get a JR Pass for trains!",
+        "teach me basic python programming": "Let's start with Python basics!\n\n1. Variables:\n   name = 'John'\n   age = 25\n\n2. Print:\n   print('Hello World!')\n\n3. If statements:\n   if age > 18:\n       print('Adult')\n\n4. Loops:\n   for i in range(5):\n       print(i)\n\nPython is great because it's easy to read and very powerful! What would you like to learn next?",
+        "default": "That's an interesting question! As a demo AI assistant, I have limited responses programmed. But in a real AI system, I would analyze your question using natural language processing and provide a detailed, helpful answer. Is there something specific I can help you with from my available responses?"
+      };
       
-      function addNumber(num) {
-        if (newNumber) {
-          display = num.toString();
-          newNumber = false;
-        } else {
-          display = display + num.toString();
+      function sendExample(text) {
+        document.getElementById('userInput').value = text;
+        sendMessage();
+      }
+      
+      function sendMessage() {
+        const input = document.getElementById('userInput');
+        const message = input.value.trim();
+        
+        if (message === '') return;
+        
+        // Hide welcome message
+        document.getElementById('welcomeMsg').style.display = 'none';
+        
+        // Add user message
+        addMessage(message, 'user');
+        
+        // Clear input
+        input.value = '';
+        
+        // Show typing indicator
+        setTimeout(function() {
+          addTypingIndicator();
+          
+          // Get AI response after delay
+          setTimeout(function() {
+            removeTypingIndicator();
+            const response = getResponse(message);
+            addMessage(response, 'ai');
+          }, 1500);
+        }, 500);
+      }
+      
+      function getResponse(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        // Check for exact matches
+        if (responses[lowerMessage]) {
+          return responses[lowerMessage];
         }
-        updateDisplay();
-      }
-      
-      function setOperation(op) {
-        firstNumber = parseFloat(display);
-        operation = op;
-        newNumber = true;
-      }
-      
-      function calculate() {
-        if (operation === null) return;
         
-        let secondNumber = parseFloat(display);
-        let result = 0;
-        
-        if (operation === '+') {
-          result = firstNumber + secondNumber;
-        } else if (operation === '-') {
-          result = firstNumber - secondNumber;
+        // Check for partial matches
+        for (let key in responses) {
+          if (lowerMessage.includes(key)) {
+            return responses[key];
+          }
         }
         
-        display = result.toString();
-        updateDisplay();
-        operation = null;
-        newNumber = true;
+        return responses["default"];
       }
       
-      function clear() {
-        display = '0';
-        firstNumber = 0;
-        operation = null;
-        newNumber = true;
-        updateDisplay();
+      function addMessage(text, type) {
+        const messagesDiv = document.getElementById('messages');
+        const isUser = type === 'user';
+        
+        const bgColor = isUser ? '#343541' : '#444654';
+        const icon = isUser ? '👤' : '🤖';
+        const align = 'left';
+        
+        const messageHTML = `
+          <div style="background:${bgColor};padding:20px;margin:10px 0;border-radius:8px;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="40" valign="top">
+                  <font size="5">${icon}</font>
+                </td>
+                <td style="padding-left:15px;">
+                  <font color="#ffffff" size="3" style="white-space:pre-line;">${text}</font>
+                </td>
+              </tr>
+            </table>
+          </div>
+        `;
+        
+        messagesDiv.innerHTML += messageHTML;
+        
+        // Scroll to bottom
+        window.scrollTo(0, document.body.scrollHeight);
       }
       
-      function updateDisplay() {
-        document.getElementById('display').innerText = display;
+      function addTypingIndicator() {
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML += `
+          <div id="typing" style="background:#444654;padding:20px;margin:10px 0;border-radius:8px;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="40" valign="top">
+                  <font size="5">🤖</font>
+                </td>
+                <td style="padding-left:15px;">
+                  <font color="#8e8ea0" size="3">Typing...</font>
+                </td>
+              </tr>
+            </table>
+          </div>
+        `;
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+      
+      function removeTypingIndicator() {
+        const typing = document.getElementById('typing');
+        if (typing) typing.remove();
+      }
+      
+      function newChat() {
+        document.getElementById('messages').innerHTML = '';
+        document.getElementById('welcomeMsg').style.display = 'block';
+        document.getElementById('userInput').value = '';
       }
     </script>
     
