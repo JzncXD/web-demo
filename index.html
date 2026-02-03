@@ -1,217 +1,299 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AI Chat Assistant</title>
+    <title>Snake Game</title>
   </head>
-  <body bgcolor="#343541" text="#ffffff" style="margin:0;font-family:Arial,sans-serif;">
+  <body bgcolor="#2c3e50" style="margin:0;overflow:hidden;font-family:Arial,sans-serif;">
     
-    <!-- Header -->
-    <div style="background:#202123;padding:15px;border-bottom:1px solid #444654;position:fixed;top:0;left:0;right:0;z-index:100;">
-      <center>
+    <center>
+      <h1><font color="#2ecc71" size="7">🐍 SNAKE GAME</font></h1>
+      
+      <div id="scoreBoard" style="background:#34495e;padding:15px;border-radius:10px;width:500px;margin:20px auto;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="33%">
-              <button onclick="newChat()" style="background:#10a37f;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:14px;">+ New Chat</button>
-            </td>
-            <td width="34%" align="center">
-              <h2 style="margin:0;"><font color="#10a37f" size="5">🤖 AI Chat Assistant</font></h2>
-            </td>
-            <td width="33%" align="right">
-              <font color="#8e8ea0" size="3">Model: GPT-4</font>
-            </td>
-          </tr>
-        </table>
-      </center>
-    </div>
-    
-    <!-- Chat Area -->
-    <div id="chatContainer" style="margin-top:80px;margin-bottom:150px;padding:20px;max-width:900px;margin-left:auto;margin-right:auto;">
-      
-      <!-- Welcome Message -->
-      <div style="text-align:center;margin-top:100px;" id="welcomeMsg">
-        <h1><font color="#ffffff" size="7">👋 Hello!</font></h1>
-        <p><font color="#8e8ea0" size="4">How can I help you today?</font></p>
-        
-        <br><br>
-        
-        <table width="100%" cellpadding="10">
-          <tr>
             <td width="50%">
-              <div onclick="sendExample('Explain quantum computing in simple terms')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
-                <p><font color="#ffffff" size="3">💡 Explain quantum computing</font></p>
-                <p><font color="#8e8ea0" size="2">in simple terms</font></p>
-              </div>
+              <font color="#ffffff" size="5">Score: <span id="score" style="color:#f1c40f;">0</span></font>
             </td>
-            <td width="50%">
-              <div onclick="sendExample('Write a creative story about a robot')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
-                <p><font color="#ffffff" size="3">✍️ Write a creative story</font></p>
-                <p><font color="#8e8ea0" size="2">about a robot</font></p>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td width="50%">
-              <div onclick="sendExample('Help me plan a trip to Japan')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
-                <p><font color="#ffffff" size="3">✈️ Help me plan a trip</font></p>
-                <p><font color="#8e8ea0" size="2">to Japan</font></p>
-              </div>
-            </td>
-            <td width="50%">
-              <div onclick="sendExample('Teach me basic Python programming')" style="background:#444654;padding:20px;border-radius:8px;cursor:pointer;margin:10px;">
-                <p><font color="#ffffff" size="3">💻 Teach me programming</font></p>
-                <p><font color="#8e8ea0" size="2">Python basics</font></p>
-              </div>
+            <td width="50%" align="right">
+              <font color="#ffffff" size="5">High Score: <span id="highScore" style="color:#e74c3c;">0</span></font>
             </td>
           </tr>
         </table>
       </div>
       
-      <!-- Messages will appear here -->
-      <div id="messages"></div>
+      <canvas id="gameCanvas" width="500" height="500" style="background:#1a1a1a;border:5px solid #2ecc71;border-radius:10px;"></canvas>
       
-    </div>
-    
-    <!-- Input Area (Fixed Bottom) -->
-    <div style="position:fixed;bottom:0;left:0;right:0;background:#343541;padding:20px;border-top:1px solid #444654;">
-      <center>
-        <div style="max-width:900px;background:#40414f;border-radius:10px;padding:15px;">
-          <table width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-              <td width="90%">
-                <input type="text" id="userInput" placeholder="Send a message..." style="width:95%;background:transparent;border:none;color:#ffffff;font-size:16px;outline:none;" onkeypress="if(event.key==='Enter') sendMessage()">
-              </td>
-              <td width="10%" align="right">
-                <button onclick="sendMessage()" style="background:#10a37f;color:white;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;font-size:18px;">➤</button>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <p><font color="#8e8ea0" size="2">AI can make mistakes. Check important info.</font></p>
-      </center>
-    </div>
+      <br><br>
+      
+      <div id="instructions">
+        <h2><font color="#ffffff">Use Arrow Keys to Move!</font></h2>
+        <table cellpadding="10">
+          <tr>
+            <td></td>
+            <td><button style="width:60px;height:60px;font-size:24px;background:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;">▲</button></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><button style="width:60px;height:60px;font-size:24px;background:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;">◄</button></td>
+            <td><button style="width:60px;height:60px;font-size:24px;background:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;">▼</button></td>
+            <td><button style="width:60px;height:60px;font-size:24px;background:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;">►</button></td>
+          </tr>
+        </table>
+        <br>
+        <button onclick="startGame()" style="background:#2ecc71;color:#ffffff;border:none;padding:15px 40px;font-size:24px;border-radius:10px;cursor:pointer;font-weight:bold;">START GAME</button>
+      </div>
+      
+      <div id="gameOver" style="display:none;">
+        <h2><font color="#e74c3c" size="6">GAME OVER!</font></h2>
+        <h3><font color="#ffffff">Final Score: <span id="finalScore">0</span></font></h3>
+        <button onclick="restartGame()" style="background:#f39c12;color:#ffffff;border:none;padding:15px 40px;font-size:24px;border-radius:10px;cursor:pointer;font-weight:bold;">PLAY AGAIN</button>
+      </div>
+      
+      <br>
+      <p><font color="#95a5a6" size="3">Eat the red apples to grow! Don't hit the walls or yourself!</font></p>
+      
+    </center>
     
     <script>
-      const responses = {
-        "hello": "Hello! How can I assist you today?",
-        "hi": "Hi there! What can I help you with?",
-        "how are you": "I'm doing great, thank you for asking! How can I help you today?",
-        "what is your name": "I'm an AI Chat Assistant, here to help answer your questions!",
-        "explain quantum computing in simple terms": "Quantum computing uses the principles of quantum mechanics to process information. Unlike regular computers that use bits (0 or 1), quantum computers use 'qubits' that can be both 0 and 1 at the same time. This allows them to solve certain complex problems much faster than traditional computers!",
-        "write a creative story about a robot": "Once upon a time, there was a robot named Pixel who dreamed of painting. Unlike other robots who were designed for calculations and tasks, Pixel wanted to create art. One day, Pixel discovered that by combining logic with creativity, it could paint the most beautiful digital masterpieces the world had ever seen. 🎨",
-        "help me plan a trip to japan": "Great choice! For Japan, I'd recommend:\n\n• Tokyo - Modern city, amazing food, technology\n• Kyoto - Traditional temples, beautiful gardens\n• Osaka - Food paradise, vibrant nightlife\n• Mount Fuji - Iconic views and hiking\n\nBest time to visit: Spring (cherry blossoms) or Fall (autumn colors). Don't forget to try sushi, ramen, and get a JR Pass for trains!",
-        "teach me basic python programming": "Let's start with Python basics!\n\n1. Variables:\n   name = 'John'\n   age = 25\n\n2. Print:\n   print('Hello World!')\n\n3. If statements:\n   if age > 18:\n       print('Adult')\n\n4. Loops:\n   for i in range(5):\n       print(i)\n\nPython is great because it's easy to read and very powerful! What would you like to learn next?",
-        "default": "That's an interesting question! As a demo AI assistant, I have limited responses programmed. But in a real AI system, I would analyze your question using natural language processing and provide a detailed, helpful answer. Is there something specific I can help you with from my available responses?"
-      };
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
       
-      function sendExample(text) {
-        document.getElementById('userInput').value = text;
-        sendMessage();
+      const gridSize = 20;
+      const tileCount = canvas.width / gridSize;
+      
+      let snake = [];
+      let snakeLength = 5;
+      let headX = 10;
+      let headY = 10;
+      let velocityX = 0;
+      let velocityY = 0;
+      let appleX = 15;
+      let appleY = 15;
+      let score = 0;
+      let highScore = localStorage.getItem('snakeHighScore') || 0;
+      let gameRunning = false;
+      let gameSpeed = 100;
+      
+      document.getElementById('highScore').innerText = highScore;
+      
+      // Start game
+      function startGame() {
+        document.getElementById('instructions').style.display = 'none';
+        document.getElementById('gameOver').style.display = 'none';
+        
+        // Reset game
+        snake = [];
+        snakeLength = 5;
+        headX = 10;
+        headY = 10;
+        velocityX = 1;
+        velocityY = 0;
+        score = 0;
+        gameSpeed = 100;
+        updateScore();
+        placeApple();
+        
+        gameRunning = true;
+        gameLoop();
       }
       
-      function sendMessage() {
-        const input = document.getElementById('userInput');
-        const message = input.value.trim();
+      // Restart game
+      function restartGame() {
+        startGame();
+      }
+      
+      // Arrow key controls
+      document.addEventListener('keydown', function(e) {
+        if (!gameRunning) return;
         
-        if (message === '') return;
+        // Up arrow
+        if (e.keyCode === 38 && velocityY !== 1) {
+          velocityX = 0;
+          velocityY = -1;
+          e.preventDefault();
+        }
+        // Down arrow
+        if (e.keyCode === 40 && velocityY !== -1) {
+          velocityX = 0;
+          velocityY = 1;
+          e.preventDefault();
+        }
+        // Left arrow
+        if (e.keyCode === 37 && velocityX !== 1) {
+          velocityX = -1;
+          velocityY = 0;
+          e.preventDefault();
+        }
+        // Right arrow
+        if (e.keyCode === 39 && velocityX !== -1) {
+          velocityX = 1;
+          velocityY = 0;
+          e.preventDefault();
+        }
+      });
+      
+      // Place apple randomly
+      function placeApple() {
+        appleX = Math.floor(Math.random() * tileCount);
+        appleY = Math.floor(Math.random() * tileCount);
         
-        // Hide welcome message
-        document.getElementById('welcomeMsg').style.display = 'none';
+        // Make sure apple doesn't spawn on snake
+        for (let i = 0; i < snake.length; i++) {
+          if (snake[i].x === appleX && snake[i].y === appleY) {
+            placeApple();
+            return;
+          }
+        }
+      }
+      
+      // Update score
+      function updateScore() {
+        document.getElementById('score').innerText = score;
         
-        // Add user message
-        addMessage(message, 'user');
+        if (score > highScore) {
+          highScore = score;
+          localStorage.setItem('snakeHighScore', highScore);
+          document.getElementById('highScore').innerText = highScore;
+        }
+      }
+      
+      // Draw game
+      function drawGame() {
+        // Clear canvas
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Clear input
-        input.value = '';
-        
-        // Show typing indicator
-        setTimeout(function() {
-          addTypingIndicator();
+        // Draw grid
+        ctx.strokeStyle = '#2d2d2d';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= tileCount; i++) {
+          ctx.beginPath();
+          ctx.moveTo(i * gridSize, 0);
+          ctx.lineTo(i * gridSize, canvas.height);
+          ctx.stroke();
           
-          // Get AI response after delay
-          setTimeout(function() {
-            removeTypingIndicator();
-            const response = getResponse(message);
-            addMessage(response, 'ai');
-          }, 1500);
-        }, 500);
-      }
-      
-      function getResponse(message) {
-        const lowerMessage = message.toLowerCase();
-        
-        // Check for exact matches
-        if (responses[lowerMessage]) {
-          return responses[lowerMessage];
+          ctx.beginPath();
+          ctx.moveTo(0, i * gridSize);
+          ctx.lineTo(canvas.width, i * gridSize);
+          ctx.stroke();
         }
         
-        // Check for partial matches
-        for (let key in responses) {
-          if (lowerMessage.includes(key)) {
-            return responses[key];
+        // Move snake
+        headX += velocityX;
+        headY += velocityY;
+        
+        // Check wall collision
+        if (headX < 0 || headX >= tileCount || headY < 0 || headY >= tileCount) {
+          endGame();
+          return;
+        }
+        
+        // Check self collision
+        for (let i = 0; i < snake.length; i++) {
+          if (snake[i].x === headX && snake[i].y === headY) {
+            endGame();
+            return;
           }
         }
         
-        return responses["default"];
+        // Add new head position
+        snake.push({ x: headX, y: headY });
+        
+        // Remove tail if snake hasn't eaten
+        while (snake.length > snakeLength) {
+          snake.shift();
+        }
+        
+        // Check if apple eaten
+        if (headX === appleX && headY === appleY) {
+          snakeLength++;
+          score += 10;
+          updateScore();
+          placeApple();
+          
+          // Speed up slightly
+          if (gameSpeed > 50) {
+            gameSpeed -= 2;
+          }
+        }
+        
+        // Draw snake
+        for (let i = 0; i < snake.length; i++) {
+          if (i === snake.length - 1) {
+            // Head
+            ctx.fillStyle = '#2ecc71';
+          } else {
+            // Body
+            ctx.fillStyle = '#27ae60';
+          }
+          
+          ctx.fillRect(
+            snake[i].x * gridSize + 2,
+            snake[i].y * gridSize + 2,
+            gridSize - 4,
+            gridSize - 4
+          );
+          
+          // Eyes on head
+          if (i === snake.length - 1) {
+            ctx.fillStyle = '#ffffff';
+            if (velocityX === 1) { // Moving right
+              ctx.fillRect(snake[i].x * gridSize + 12, snake[i].y * gridSize + 5, 3, 3);
+              ctx.fillRect(snake[i].x * gridSize + 12, snake[i].y * gridSize + 12, 3, 3);
+            } else if (velocityX === -1) { // Moving left
+              ctx.fillRect(snake[i].x * gridSize + 5, snake[i].y * gridSize + 5, 3, 3);
+              ctx.fillRect(snake[i].x * gridSize + 5, snake[i].y * gridSize + 12, 3, 3);
+            } else if (velocityY === -1) { // Moving up
+              ctx.fillRect(snake[i].x * gridSize + 5, snake[i].y * gridSize + 5, 3, 3);
+              ctx.fillRect(snake[i].x * gridSize + 12, snake[i].y * gridSize + 5, 3, 3);
+            } else if (velocityY === 1) { // Moving down
+              ctx.fillRect(snake[i].x * gridSize + 5, snake[i].y * gridSize + 12, 3, 3);
+              ctx.fillRect(snake[i].x * gridSize + 12, snake[i].y * gridSize + 12, 3, 3);
+            }
+          }
+        }
+        
+        // Draw apple
+        ctx.fillStyle = '#e74c3c';
+        ctx.fillRect(
+          appleX * gridSize + 2,
+          appleY * gridSize + 2,
+          gridSize - 4,
+          gridSize - 4
+        );
+        
+        // Apple shine
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(
+          appleX * gridSize + 4,
+          appleY * gridSize + 4,
+          4,
+          4
+        );
       }
       
-      function addMessage(text, type) {
-        const messagesDiv = document.getElementById('messages');
-        const isUser = type === 'user';
+      // Game loop
+      function gameLoop() {
+        if (!gameRunning) return;
         
-        const bgColor = isUser ? '#343541' : '#444654';
-        const icon = isUser ? '👤' : '🤖';
-        const align = 'left';
-        
-        const messageHTML = `
-          <div style="background:${bgColor};padding:20px;margin:10px 0;border-radius:8px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="40" valign="top">
-                  <font size="5">${icon}</font>
-                </td>
-                <td style="padding-left:15px;">
-                  <font color="#ffffff" size="3" style="white-space:pre-line;">${text}</font>
-                </td>
-              </tr>
-            </table>
-          </div>
-        `;
-        
-        messagesDiv.innerHTML += messageHTML;
-        
-        // Scroll to bottom
-        window.scrollTo(0, document.body.scrollHeight);
+        drawGame();
+        setTimeout(gameLoop, gameSpeed);
       }
       
-      function addTypingIndicator() {
-        const messagesDiv = document.getElementById('messages');
-        messagesDiv.innerHTML += `
-          <div id="typing" style="background:#444654;padding:20px;margin:10px 0;border-radius:8px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="40" valign="top">
-                  <font size="5">🤖</font>
-                </td>
-                <td style="padding-left:15px;">
-                  <font color="#8e8ea0" size="3">Typing...</font>
-                </td>
-              </tr>
-            </table>
-          </div>
-        `;
-        window.scrollTo(0, document.body.scrollHeight);
+      // End game
+      function endGame() {
+        gameRunning = false;
+        document.getElementById('finalScore').innerText = score;
+        document.getElementById('gameOver').style.display = 'block';
       }
       
-      function removeTypingIndicator() {
-        const typing = document.getElementById('typing');
-        if (typing) typing.remove();
-      }
+      // Draw initial state
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      function newChat() {
-        document.getElementById('messages').innerHTML = '';
-        document.getElementById('welcomeMsg').style.display = 'block';
-        document.getElementById('userInput').value = '';
-      }
+      ctx.fillStyle = '#2ecc71';
+      ctx.font = 'bold 30px Arial';
+      ctx.fillText('Press START to Play!', 120, 260);
     </script>
     
   </body>
